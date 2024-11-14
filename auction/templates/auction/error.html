@@ -1,0 +1,14 @@
+{% extends "auction/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <main class="main" id="main">
+        <div class="content-heading-container">
+            <h1 class="content-heading">Error</h1>
+        </div> 
+        <div class="error">
+            <p class="message">{{ message }}</p>
+            <a href="{% url 'active_listing' %}"><button class="back-btn">Back<i class="fa-solid fa-square-caret-left"></i></button></a>
+        </div>
+    </main>
+{% endblock %}

@@ -1,0 +1,147 @@
+{% extends "auction/layout.html" %}
+{% load static %}
+{% load custom_filters %}
+{% block body %}
+<main class="main" id="main">
+    <section class="activeListing">
+        <div class="modal-button">
+            <div class="content-heading-container">
+                <h1 class="content-heading">Active Listings</h1>
+                <button class="filter-btn" id="myBtn">Filters <i class="fa-solid fa-filter"></i></button>
+            </div>
+        </div>
+        <section id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form action="{% url 'filter_result' %}" method="POST" class="activeListingFilter">
+                    {% csrf_token %}
+                    <div class="filter-body">
+                        <div class="filters">
+                            <div class="by-brand">
+                                <h3 class="filter-option-heading">filter by brand</h3>
+                                <div class="selectList filter-brand">
+                                    {% for brand in brands %}
+                                    <div class="brand-option-box options-box">
+                                        <input type="checkbox" id="brand_{{ brand.id }}" name="brand"
+                                            value="{{ brand.brand_name }}">
+                                        <label class="label" for="brand_{{ brand.id }}">{{ brand.brand_name }}</label><br>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="by-category">
+                                <h3 class="filter-option-heading">filter by category</h3>
+                                <div class="selectList filter-category">
+                                    {% for category in categories %}
+                                    <div class="category-option-box options-box">
+                                        <input type="checkbox" id="category_{{ category.id }}" name="category"
+                                            value="{{ category.catagory_name }}">
+                                        <label class="label" for="category_{{ category.id }}">{{ category.category_name }}</label><br>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="buttonOne selectBtn" role="button">Search</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <div class="listingResult">
+            <div class="activeListingResult">
+                {% for motorcycle in motorcycles %}
+                <div class="card">
+                    <a href="{% url 'motorcycle' name=motorcycle.name %}?id={{ motorcycle.id }}"><img
+                            class="card-img-top" src="{{ motorcycle.image_url }}" alt="{{ motorcycle.name }}"></a>
+                    <div class="card-body">
+                        <div class="card-caption">
+                            <a href="{% url 'motorcycle' name=motorcycle.name %}?id={{ motorcycle.id }}"
+                                class="card-title">{{ motorcycle.name }}</a>
+                            <p class="starting-bid-price"><sub>Bid starts from: </sub><i
+                                    class="fa-solid fa-indian-rupee-sign"></i>{{ motorcycle.start_price|format_number }}
+                            </p>
+                        </div>
+
+                        <div class="actions">
+                            <a href="{% url 'motorcycle' name=motorcycle.name %}?id={{ motorcycle.id }}"
+                                class="detailsBtn">Details</a>
+                            {% if user.is_authenticated and motorcycle.isActive %}
+                            {% if isOwner %}
+                            <form action="{% url 'closeAuction' name=motorcycle.name %}?id={{ motorcycle.id }}"
+                                method="POST" class="mx-3">
+                                {% csrf_token %}
+                                <button type="submit" class="close_auction">Close Auction</button>
+                            </form>
+                            {% endif %}
+
+                            {% if isListingInWatchlist %}
+                            <form action="{% url 'removeWatchList' name=motorcycle.name %}?id={{ motorcycle.id }}"
+                                method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="remove-from-watch">Remove From Watchlist</button>
+                            </form>
+                            {% else %}
+                            <form action="{% url 'addWatchList' name=motorcycle.name %}?id={{ motorcycle.id }}"
+                                method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="add-to-watch">Add To Watchlist</button>
+                            </form>
+                            {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- Pagination controls -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if motorcycles.has_previous %}
+                <a href="?page=1">&laquo;&laquo; first</a>
+                <a href="?page={{ motorcycles.previous_page_number }}">&laquo; previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ motorcycles.number }} of {{ motorcycles.paginator.num_pages }}.
+                </span>
+
+                {% if motorcycles.has_next %}
+                <a href="?page={{ motorcycles.next_page_number }}">next &raquo;</a>
+                <a href="?page={{ motorcycles.paginator.num_pages }}">last &raquo;&raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </section>
+</main>
+
+<script>
+    // Active Listing Page - Filter Modal
+    // Get the modal
+    let modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    let btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    let span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal 
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "auction/layout.html" %}
+{% load static %}
+
+{% block body %}
+<main class="main" id="main">
+  <section class="login-container bg-img">
+    <img src="" alt="">
+    {% if message %}
+    <div>{{ message }}</div>
+    {% endif %}
+  </section>
+  <section class="login-form-container">
+    <h2 class="log-heading">Login</h2>
+    <form method="post" action="{% url 'login' %}" class="container">
+      <div class="login-text">
+        <p>please Login to place bid</p>
+      </div>
+      {% csrf_token %} {{ form.as_p }}
+      <input class="buttonOne" type="submit" value="Login" />
+    </form>
+    {% if form.errors %}
+    <p class="error-message">{{ form.errors }}</p>
+    {% endif %}
+    <p class="redirect">Don't have an account?<br><a href="{% url 'register' %}"> Register here <i class="fa-solid fa-plus"></i></a></p>
+  </section>
+</main>
+
+{% endblock %}
+
+<!-- login.html -->

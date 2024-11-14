@@ -1,0 +1,39 @@
+{% extends "auction/layout.html" %}
+{% load static %}
+{% block body %}
+<main class="main" id="main">
+     <div class="content-heading-container">
+          <h1 class="content-heading">All Users</h1>
+      </div>     
+     <section class="all-users">
+          <ul class="user-list">
+               {% for user in all_users %}
+               <li class="user">
+                    <div><p class="user-id">{{ user.id }}</p></div>
+                    <div><a class="user-link" href="{% url 'user_profile' username=user.username %}">{{ user.firstName }} {{ user.lastName }}</a></div>
+                    <div><a class="collection-link" href="{% url 'collection' username=user.username %}">Collection</a></div>
+                    <div><a class="listings-link" href="{% url 'user_listings' username=user.username %}">Listings</a></div>
+               </li>
+               {% endfor %}
+          </ul>
+     </section>
+     <!-- Pagination controls -->
+     <div class="pagination">
+          <span class="step-links">
+               {% if all_users.has_previous %}
+               <a href="?page=1">&laquo;&laquo; first</a>
+               <a href="?page={{ all_users.previous_page_number }}">&laquo; previous</a>
+               {% endif %}
+     
+               <span class="current">
+               Page {{ all_users.number }} of {{ all_users.paginator.num_pages }}.
+               </span>
+     
+               {% if all_users.has_next %}
+               <a href="?page={{ all_users.next_page_number }}">next &raquo;</a>
+               <a href="?page={{ all_users.paginator.num_pages }}">last &raquo;&raquo;</a>
+               {% endif %}
+          </span>
+     </div>
+</main>
+{% endblock %}

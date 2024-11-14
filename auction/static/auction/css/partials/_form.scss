@@ -1,0 +1,28 @@
+// // _partials/_form.scss
+// @mixin form-container {
+//      @include flex-row-center;
+//      @include width-height(500px, 100%);
+//      margin: auto;
+//      background-color: $background-color;
+//      padding: 20px;
+//      border-radius: 8px;
+//      box-shadow: 0 0 10px $black;
+//      max-width: 100%;
+//    }
+   
+//    @mixin input-submit {
+//      @include button-styles;
+//      background-color: $success-color;
+//      color: #fff;
+//    }
+   
+//    @mixin input-text {
+//      width: 100%;
+//      padding: auto;
+//      box-sizing: border-box;
+//    }
+   
+//    @mixin form-styles {
+//      display: flex;
+//      flex-direction: column;
+//    }

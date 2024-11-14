@@ -1,0 +1,28 @@
+<ul class="list-group replies">
+    {% for reply in replies %}
+    <li class="list-group-item">
+        <div class="comment-user-pic">
+            {% if reply.author.profile_picture %}
+            <img class="comment-user-profile-pic" src="{{ reply.author.profile_picture.url }}" alt="User Pic" />
+            {% else %}
+            <img src="/path/to/default/image.jpg" alt="Default User Pic" />
+            {% endif %}
+        </div>
+        <div class="comment">
+            <a href="{% url 'user_profile' username=reply.author.username %}" class="comment-author">
+                <strong>@{{ reply.author }}</strong>
+            </a>
+            <div class="comment-message">
+                <p class="comment-text">
+                    <a href="{% url 'user_profile' username=parent_username %}">@{{ parent_username }}</a> {{ reply.message }}
+                </p>
+                <span class="comment-toggle">...</span>
+            </div>
+            <button class="reply-btn" data-comment-id="{{ reply.id }}" data-listing-id="{{ listing.id }}" data-username="{{ reply.author.username }}">
+                Reply
+            </button>
+            {% include 'auction/templates/partials/reply.html' with replies=reply.replies.all parent_username=reply.author.username %}
+        </div>
+    </li>
+    {% endfor %}
+</ul>

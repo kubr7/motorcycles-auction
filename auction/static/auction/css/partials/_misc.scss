@@ -1,0 +1,91 @@
+
+.custom-select {
+  position: relative;
+  width: auto;
+  transition: all 1s ease-in;
+}
+
+.select-selected {
+  @include flex-col-center;
+  width: 5rem;
+  color: #fff;
+  cursor: pointer;
+  outline: none;
+  text-align: center;
+  font-size: clamp(0.75rem, 3vw, 0.875rem);
+  font-weight: 700;
+  text-transform: capitalize;
+  border: 1px solid transparent;
+
+  #caret {
+    width: 1rem;
+    height: 1rem;
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    transition: transform 0.3s ease;
+  }
+}
+
+.select-items {
+  @include flex-row-center($justify: space-evenly);
+  position: absolute;
+  outline: none;
+  border: none;
+  width: calc(100vw - 2rem);
+  z-index: 3;
+  // margin-top: 3.29em;
+  overflow: hidden;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.8s ease-in;
+  background-color: rgba($color: #000, $alpha: 0.5);
+  // height: auto;
+  // transform: translateX(-21%);
+  // transition: height 2s, display 2s, transform 2s;
+  // box-shadow: 0 6px 12px rgba(0, 0, 0, 1);
+
+  img {
+    max-width: 100%;
+    object-fit: contain;
+  }
+}
+
+.select-items-category {
+  transform: translateX(-90.78%);
+}
+
+.select-items p {
+  padding: 3px 5px;
+  font-size: clamp(0.625rem, 2vw, 0.75rem);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 800;
+  text-align: center;
+  width: 10rem;
+  background-color: $color3;
+
+  &:hover {
+    color: $color1;
+  }
+}
+
+.select-hide {
+  display: block;
+  transition: display 2s;
+}
+
+/* When the dropdown is not hidden (open) */
+.select-items:not(.select-hide) {
+  max-height: 400px;
+  transition: max-height 0.3s ease-in;
+}
+
+/* When the dropdown is open */
+.select-items.select-hide {
+  max-height: 0;
+}
+
+// /* When the dropdown is not hidden (open) */
+// .select-items:not(.select-hide) {
+//   max-height: 600px; /* Adjust the max height as needed */
+//   transition: max-height 0.3s ease-in;
+// }

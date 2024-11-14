@@ -1,0 +1,67 @@
+<!-- listing_bids.html -->
+{% extends "auction/layout.html" %}
+{% load static %} {% load custom_filters %}
+{% block body %}
+<main class="main" id="main">
+  <div class="content-heading-container">
+    <h1 class="content-heading">Listing Bids</h1>
+  </div>
+  <div class="all-listing-bids">
+    {% if page_obj %}
+    <table class="all-listing-bids-table">
+      <caption>All Bids for {{ motorcycle.name }}</caption>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Bid Amount</th>
+          <th>Bidder</th>
+          <th>Bid Time</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for bid in page_obj %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td><i class="fa-solid fa-indian-rupee-sign rupee-icon"></i> {{ bid.bid_amount|format_number }}</td>
+          <td>by {{ bid.bidder.firstName }}</td>
+          <td>on {{ bid.bid_time }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <!-- Pagination controls -->
+    <div class="pagination">
+      <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo;&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">&laquo; previous</a>
+        {% endif %}
+
+        <span class="current">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">next &raquo;</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;&raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+    <div class="go-back-link">
+      <!-- <a class="back-link" href="{% url 'motorcycle' name=motorcycle.name %}?id={{ motorcycle.id }}"><i class="fa-solid fa-backward"></i>Back to Listing</a> -->
+      <a class="back-link" href="{% url 'motorcycle' name=motorcycle.name %}?id={{ motorcycle.id }}">
+        <i class="fa-solid fa-backward"></i>
+        <span class="tooltip-text">Back to Listing</span>
+      </a>
+    </div>
+    {% else %}
+    <p>No bids have been placed yet.</p>
+    {% endif %}
+  </div>
+
+
+</main>
+{% endblock %}
+{% block newsletter %}
+{% endblock newsletter %}

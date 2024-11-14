@@ -1,0 +1,61 @@
+{% extends "auction/layout.html" %}
+{% load static %}
+{% load custom_filters %}
+{% block body %}
+<main class="main" id="main">
+     <div class="content-heading-container">
+          <h1 class="content-heading">All Bids</h1>
+     </div>
+     <div class="all-total-bids">
+          <table class="all-bids-table">
+               <caption>Bid Data of All Time</caption>
+               <thead>
+                    <tr>
+                         <th>#</th>
+                         <th>User</th>
+                         <th>Motorcycle</th>
+                         <th>Bid Amount</th>
+                         <th>Bid Time</th>
+                    </tr>
+               </thead>
+               <tbody>
+                    {% for bid in page_obj %}
+                    <tr>
+                         <td>{{ forloop.counter }}</td>
+                    <td>
+                        {% if bid.bidder.username %}
+                        <a href="{% url 'user_profile' username=bid.bidder.username %}">{{ bid.bidder.firstName }} {{ bid.bidder.lastName }}</a>
+                        {% else %}
+                        {{ bid.bidder.firstName }} {{ bid.bidder.lastName }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'motorcycle' name=bid.motorcycle.name %}">{{ bid.motorcycle.name }}</a>
+                    </td>
+                    <td>{{ bid.bid_amount|format_number }}</td>
+                    <td>{{ bid.bid_time }}</td>
+                    </tr>
+                    {% endfor %}
+               </tbody>
+          </table>
+     </div>
+     <!-- Pagination controls -->
+     <div class="pagination">
+          <span class="step-links">
+            {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo;&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">&laquo; previous</a>
+            {% endif %}
+    
+            <span class="current">
+              Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next &raquo;</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;&raquo;</a>
+            {% endif %}
+          </span>
+     </div>
+</main>
+{% endblock %}

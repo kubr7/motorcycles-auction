@@ -1,0 +1,141 @@
+{% extends "auction/layout.html" %}
+{% load static %}
+{% block body %}
+<main class="user-profile-page">
+     {% if user.is_authenticated %}
+     <aside class="sidenav">
+          <div class="profile-name">
+               <p>{{profile_user.firstName}} {{ profile_user.lastName }}</p>
+          </div>
+          <div class="side-menu">
+               {% if profile_user == current_user %}
+               <a href="{% url 'logout' %}" class="side-menu-links"><i
+                         class="fa-solid fa-right-from-bracket sidebar-profile-icon"></i>Log out</a>
+               {% endif %}
+               <a href="{% url 'user_listings' username=profile_user.username %}" class="side-menu-links"><i
+                    class="fa-solid fa-list-check sidebar-profile-icon"></i>Listings</a>
+               <a href="{% url 'collection' username=profile_user.username %}" class="side-menu-links"><i
+                         class="fa-solid fa-basket-shopping sidebar-profile-icon" aria-hidden="true"></i>Collection</a>
+               {% if profile_user == current_user %}
+               <a href="{% url 'watchlist' username=profile_user.username %}" class="side-menu-links"><i
+                         class="fa-solid fa-heart sidebar-profile-icon" aria-hidden="true"></i>My Watchlist</a>
+               {% endif %}
+               <a href="#personal-info" class="side-menu-links"><i class="fa-solid fa-circle-info sidebar-profile-icon"
+                    aria-hidden="true"></i>Personal Information</a>
+          </div>
+     </aside>
+     <section class="user-data">
+          {% if profile_user == current_user %}
+          <div class="profile-heading">
+               <p>My Profile</p>
+          </div>
+          {% else %}
+          <div class="profile-heading">
+               <h3>{{ profile_user.firstName }}'s Profile</h3>
+          </div>
+          {% endif %}
+          <div class="image-record-container">
+               <div class="profile-img-box">
+                    <img class="profile-picture"
+                         src="{% if profile_user.profile_picture %}{{ profile_user.profile_picture.url }}{% else %}{% static 'auction/images/user.png' %}{% endif %}"
+                         alt="{% if profile_user.profile_picture %}{{ profile_user.username }}'s Profile Picture{% else %}Default Profile Picture{% endif %}" />
+               </div>
+               <div class="auction-info">
+                    <table>
+                         <caption>
+                              <h1>Auction Record</h1>
+                         </caption>
+                         <tbody>
+                              <tr>
+                                   <th>Auction won</th>
+                                   <th>-</th>
+                                   <td>{{ collection_count }}</td>
+                              </tr>
+                              <tr>
+                                   <th>Lisitng Posted</th>
+                                   <th>-</th>
+                                   <td>{{ user_listings_count }}</td>
+                              </tr>
+                         </tbody>
+                    </table>
+               </div>
+          </div>
+
+
+          <div class="personal-info" id="personal-info">
+               <div class="info">
+                    <table>
+                         <tbody>
+                              <tr>
+                                   <th>Name</th>
+                                   <td>{{ profile_user.firstName|default:"" }} {{ profile_user.lastName|default:"" }}
+                                   </td>
+                              </tr>
+                              <tr>
+                                   <th>Username</th>
+                                   <td>{{ profile_user.username }}</td>
+                              </tr>
+                              <tr>
+                                   <th>Email</th>
+                                   <td>{{ profile_user.email }}</td>
+                              </tr>
+                              <tr>
+                                   <th>DOB</th>
+                                   <td>{{ profile_user.dob }}</td>
+                              </tr>
+                              <tr>
+                                   <th>Contact</th>
+                                   <td>{{ profile_user.mobileNo }}</td>
+                              </tr>
+                              <tr>
+                                   <th>Address</th>
+                                   <td>{{ profile_user.address }}</td>
+                              </tr>
+                         </tbody>
+                    </table>
+               </div>
+               <div class="edit-profile-btn">
+                    {% if profile_user == current_user %}
+                    <a href="{% url 'edit_profile' username=profile_user.username %}"><button class="edit-btn"><i
+                                   class="fa-solid fa-pen-to-square"></i></button></a>
+
+                    {% endif %}
+               </div>
+          </div>
+          <div class="connection-links">
+               <a href="https://www.instagram.com/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+               <a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+               <a href="https://in.pinterest.com/" target="_blank"><i class="fa-brands fa-pinterest"></i></a>
+               <a href="https://x.com/home" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+          </div>
+     </section>
+     {% endif %}
+</main>
+<script>
+     document.addEventListener('DOMContentLoaded', function () {
+          // Debouncing mechanism for the scroll event
+          document.addEventListener('scroll', handleScrollForSidebar);
+          // Get the sidebar element
+          let sidebar = document.getElementById("sidebar");
+
+          // Get the offset position of the navbar
+          let sidebarOffset = sidebar.offsetTop;
+          console.log("sidebarOffset:", sidebarOffset);
+
+
+
+          // Add or remove the sticky class and update styles based on scroll position
+          function handleScrollForSidebar() {
+               if (window.scrollY > 81) {
+                    sidebar.classList.add("sticky-sidebar");
+                    sidebar.classList.add("bg");
+               } else {
+                    sidebar.classList.remove("sticky-sidebar");
+                    sidebar.classList.remove("bg");
+               }
+          }
+     });
+</script>
+{% endblock body %}
+{% block newsletter %}
+{% endblock %}

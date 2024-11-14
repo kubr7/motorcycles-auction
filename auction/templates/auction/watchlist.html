@@ -1,0 +1,67 @@
+{% extends "auction/layout.html" %}
+{% load custom_filters %}
+{% load static %}
+
+{% block body %}
+<main class="main" id="main">
+    {% if request.user.is_authenticated %}
+    <div class="content-heading-container">
+        <h1 class="content-heading">Watchlist</h1>
+    </div>    
+    <div class="watchList-page">
+        {% if motorcycles %}
+        <div class="watchList">
+            {% for motorcycle in motorcycles %}
+            <div class="card">
+                <a href="{% url 'motorcycle' name=motorcycle.name %}?id={{ motorcycle.id }}"><img
+                        class="card-img-top" src="{{ motorcycle.image_url }}" alt="{{ motorcycle.name }}"></a>
+                <div class="card-body">
+                    <div class="card-caption">
+                        <a href="{% url 'motorcycle' name=motorcycle.name %}?id={{ motorcycle.id }}"
+                            class="card-title">{{ motorcycle.name }}</a>
+                        <p class="starting-bid-price"><sub>Bid starts from: </sub><i
+                                class="fa-solid fa-indian-rupee-sign"></i>{{ motorcycle.start_price|format_number }}
+                        </p>
+                    </div>
+
+                    <div class="actions">
+                        <a href="{% url 'motorcycle' name=motorcycle.name %}?id={{ motorcycle.id }}"
+                            class="detailsBtn">Details</a>
+                        {% if user.is_authenticated and motorcycle.isActive %}
+                        {% if isOwner %}
+                        <form action="{% url 'closeAuction' name=motorcycle.name %}?id={{ motorcycle.id }}"
+                            method="POST" class="mx-3">
+                            {% csrf_token %}
+                            <button type="submit" class="close_auction">Close Auction</button>
+                        </form>
+                        {% endif %}
+
+                        {% if isListingInWatchlist %}
+                        <form action="{% url 'removeWatchList' name=motorcycle.name %}?id={{ motorcycle.id }}"
+                            method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="remove-from-watch">Remove From Watchlist</button>
+                        </form>
+                        {% else %}
+                        <form action="{% url 'addWatchList' name=motorcycle.name %}?id={{ motorcycle.id }}"
+                            method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="add-to-watch">Add To Watchlist</button>
+                        </form>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>        
+        {% else %}
+        <div class="empty-watchlist">
+            <p>No Progress in Watchlist.</p>
+            <a href="{% url 'active_listing' %}">Click Here to Make it Look Like Watchlist.</a>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+</main>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "auction/layout.html" %}
+{% load static %}
+{% load custom_filters %}
+{% block body %}
+<main class="main" id="main">
+    {% if request.user.is_authenticated %}
+    <div class="content-heading-container">
+    {% if profile_user == current_user %}
+    <h1 class="content-heading">Your Listings</h1>
+    {% else %}
+    <h1 class="content-heading">Listing By {{ profile_user.firstName }}</h1>
+    {% endif %}
+    </div>
+    <section class="user-listings-page">
+        <img src="" alt="">
+        {% if user_listings %}        
+        <div class="user-listings">
+            {% for motorcycle in user_listings %}
+            <div class="card">
+                <a href="{% url 'motorcycle' name=motorcycle.name %}?id={{ motorcycle.id }}"><img
+                        class="card-img-top" src="{{ motorcycle.image_url }}" alt="{{ motorcycle.name }}"></a>
+                <div class="card-body">
+                    <div class="card-caption">
+                        <a href="{% url 'motorcycle' name=motorcycle.name %}?id={{ motorcycle.id }}"
+                            class="card-title">{{ motorcycle.name }}</a>
+                        <p class="starting-bid-price"><sub>Bid starts from: </sub><i
+                                class="fa-solid fa-indian-rupee-sign"></i>{{ motorcycle.start_price|format_number }}
+                        </p>
+                    </div>
+
+                    <div class="actions">
+                        <a href="{% url 'motorcycle' name=motorcycle.name %}?id={{ motorcycle.id }}"
+                            class="detailsBtn">Details</a>
+                        {% if user.is_authenticated and motorcycle.isActive %}
+                        {% if isOwner %}
+                        <form action="{% url 'closeAuction' name=motorcycle.name %}?id={{ motorcycle.id }}"
+                            method="POST" class="mx-3">
+                            {% csrf_token %}
+                            <button type="submit" class="close_auction">Close Auction</button>
+                        </form>
+                        {% endif %}
+
+                        {% if isListingInWatchlist %}
+                        <form action="{% url 'removeWatchList' name=motorcycle.name %}?id={{ motorcycle.id }}"
+                            method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="remove-from-watch">Remove From Watchlist</button>
+                        </form>
+                        {% else %}
+                        <form action="{% url 'addWatchList' name=motorcycle.name %}?id={{ motorcycle.id }}"
+                            method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="add-to-watch">Add To Watchlist</button>
+                        </form>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <article class="no-listing error">
+            {% if profile_user == current_user %}
+            <h1 class="message">You have no listing.</h1>
+            {% else %}
+            <h1 class="message">No Listing By {{ profile_user.firstName }}</h1>
+            {% endif %}
+        </article>
+        {% endif %}
+    </section>
+    {% endif %}
+</main>
+{% endblock %}

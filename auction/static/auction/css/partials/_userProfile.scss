@@ -1,0 +1,280 @@
+// _partials/_userProfile.scss
+
+.user-profile-page {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidenav {
+  height: 80vh;
+  width: 20%;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.profile-name {
+  color: #fff;
+  text-align: end;
+  background-color: #071952;
+
+  p {
+    margin: 0 5px;
+    font-weight: 700;
+    font-size: clamp(0.875rem, 2vw, 1.25rem);
+  }
+}
+
+.side-menu {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.side-menu-links {
+  max-width: 100%;
+  width: 100%;
+  font-size: clamp(0.625rem, 2vw, 0.875rem);
+  color: #071952;
+  font-weight: 600;
+
+  text-decoration: none;
+  margin: 4px 0;
+  transition: all 0.2s linear;
+
+  &:hover {
+    color: $logo-name-color;
+  }
+
+  &:hover .sidebar-profile-icon {
+    color: $color1;
+  }
+
+  .sidebar-profile-icon {
+    margin-right: 0.625rem;
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    color: $color1;
+    transition: all 0.2s linear;
+  }
+}
+
+.user-data {
+  display: flex;
+  width: 80%;
+  padding: 15px;
+  height: 80vh;
+  justify-content: space-between;
+  flex-flow: column;
+}
+
+.profile-heading {
+  font-weight: 700;
+  font-size: clamp(0.875rem, 2vw, 1.125rem);
+}
+
+.image-record-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.profile-img-box {
+  padding: 5px;
+
+  .profile-picture {
+    width: 225px;
+    height: 225px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+.auction-info {
+  width: 50%;
+  table {
+    margin: auto;
+    font-size: $font-table;
+    border-collapse: collapse;
+  }
+
+  caption h1{
+    font-size: clamp(1rem, 2vw, 1.5rem);
+  }
+
+  thead,
+  tbody {
+    border-bottom: 2px solid black;
+  }
+
+  th {
+    text-align: start;
+  }
+
+  td {
+    // width: 5rem;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    margin: 0 5px;
+    text-align: end;
+    color: $color1;
+  }
+}
+
+.personal-info {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  background-color: lightcyan;
+
+  // .info-card-heading {
+  //   h3 {
+  //     text-align: left;
+  //   }
+  // }
+
+  .edit-profile-btn {
+    a {
+      text-align: end;
+      text-decoration: none;
+
+      button {
+        @include button-with-icon;
+      }
+    }
+  }
+}
+
+.info {
+  width: 100%;
+  table {
+    margin: auto;
+    padding: 1rem;
+
+    th {
+      text-align: left;
+      background-color: aliceblue;
+      border: 1px solid #fff;
+    }
+
+    td {
+      width: 100%;
+      text-align: right;
+      background-color: aliceblue;
+      border: 1px solid #fff;
+    }
+  }
+}
+
+
+.connection-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s linear;
+
+  a {
+    color: $color1;
+
+    > i {
+      cursor: pointer;
+    }
+
+    > i:hover {
+      color: $color1;
+    }
+  }
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: clamp(0.875rem, 2vw, 1.125rem);
+  }
+}
+
+@media (max-width: 992px) {
+  .user-profile-page {
+    flex-direction: column;
+  }
+
+  .sidenav {
+    width: 100%;
+    height: auto;
+  }
+
+  .user-data {
+    width: 100%;
+  }
+
+  .profile-img-box {
+    padding: 5px;
+    height: auto;
+
+    .profile-picture {
+      width: 200px;
+      height: 200px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .user-profile-page {
+    flex-direction: column;
+  }
+
+  .sidenav {
+    width: 100%;
+    height: auto;
+  }
+
+  .user-data {
+    width: 100%;
+  }
+
+  .profile-img-box {
+    padding: 5px;
+    height: auto;
+
+    .profile-picture {
+      width: 175px;
+      height: 175px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .user-profile-page {
+    flex-direction: column;
+  }
+
+  .sidenav {
+    width: 100%;
+    height: auto;
+  }
+
+  .user-data {
+    width: 100%;
+  }
+
+  .profile-img-box {
+    padding: 5px;
+    height: auto;
+
+    .profile-picture {
+      width: 150px;
+      height: 150px;
+    }
+  }
+}

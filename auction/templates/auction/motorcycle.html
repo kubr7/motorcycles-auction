@@ -1,0 +1,356 @@
+{% extends "auction/layout.html" %}
+{% load static %}
+{% load custom_filters %}
+{% block body %}
+<main class="main listing-page" id="main">
+  <aside class="listing-bid-data" id="bid-data">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fa-solid fa-xmark"></i></a>
+    <div class="all-bids">
+      <h1>Hello bidders,</h1>
+      <ul class="bid-list">
+        <p class="bidding-listing-name">Bids for {{ motorcycle.name }}</p>
+        {% if valid_bids %}
+        {% for bid in valid_bids %}
+        <li class="bid-item">
+          <span class="bid-amount"><i class="fa-solid fa-indian-rupee-sign rupee-icon"></i> {{ bid.bid_amount|format_number }}</span>
+          <button class="toggle-details">...</button>
+          <div class="bid-details">
+            by {{ bid.bidder.firstName }} on {{ bid.bid_time }}
+          </div>
+        </li>
+        {% endfor %}
+        {% else %}
+        <p class="no-bids">No bids have been placed yet.</p>
+        {% endif %}
+      </ul>
+    </div>
+    <div class="all-listing-bids">
+      <a class="see-bid-info-link" href="{% url 'listing_bids' name=motorcycle.name %}?id={{ motorcycle.id }}">See Full Bids Info</a>
+    </div>
+  </aside>
+
+  <div class="listing-detail">
+    <!-- Check if auction is closed -->
+    <div class="update-message-alert">
+      <h2 class="message">{{ message }}</h2>
+    </div>
+    <div class="row">
+      <span class="open" id="open" onclick="openNav()"><i class="fa-solid fa-chart-bar"></i></span> 
+      <div class="user-actions">
+        {% if user.is_authenticated and motorcycle.isActive %}
+        <div class="watchlist">
+          {% if isMotorcycleInWatchlist %}
+          <form action="{% url 'removeWatchList' name=motorcycle.name %}?id={{ motorcycle.id }}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="remove-from-watch">
+              Remove From Watchlist
+            </button>
+          </form>
+          {% else %}
+          <form action="{% url 'addWatchList' name=motorcycle.name %}?id={{ motorcycle.id }}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="add-to-watch">Add To Watchlist</button>
+          </form>
+          {% endif %}
+        </div>
+        <div class="watchlist">
+          {% if isOwner %}
+          <form action="{% url 'close_auction' name=motorcycle.name %}?id={{ motorcycle.id }}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="close_auction">Close Auction</button>
+          </form>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+      <div class="timer-watch">
+        {% if not motorcycle.isExpired %}
+        <p id="timer" data-end-time="{{ motorcycle.end_time|date:'c' }}">Auction Status</p>
+        {% else %}
+        <p id="timer" data-end-time="{{ motorcycle.end_time|date:'c' }}">Auction Status</p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="listing-details">
+      <div class="details-box">
+        <div class="name-img">
+          <h1 class="bike-name">{{ motorcycle.name }}</h1>
+          <div class="image-container card">
+            <img class="listing-img card-img" src="{{ motorcycle.image_url }}" alt="{{ motorcycle.name }}" />
+            {% if motorcycle.isExpired %}
+            {% if sold %}
+            <div class="sold-stamp">
+                <p>SOLD</p>
+            </div>
+            {% else %}
+            <div class="sold-stamp">
+              <p>UNSOLD</p>
+            </div>
+            {% endif %}
+            {% endif %}
+          </div>
+        </div>
+        <div class="specifications-info">
+          <div class="info">
+            <div class="owner-details">
+              <p class="owner-name">
+                Owner Name: {{ motorcycle.owner.firstName }}
+              </p>
+              <a href="{% url 'user_profile' username=user.username %}" class="owner-username">
+                @{{ motorcycle.owner }}
+              </a>
+            </div>
+            <div class="bid-info">
+              <p class="bid">
+                Starting Bid: <i class="fa-solid fa-indian-rupee-sign rupee-icon"></i> {{motorcycle.start_price|format_number }}
+              </p>
+              {% if not motorcycle.isExpired and not motorcycle.sold%}
+              {% if motorcycle.current_bid.bid_amount != motorcycle.start_price %}
+              <p class="bid">
+                Current Bid: <i class="fa-solid fa-indian-rupee-sign rupee-icon"></i>{{motorcycle.current_bid.bid_amount|format_number }} by
+                {{motorcycle.current_bid.bidder.firstName}}
+              </p>
+              {% endif %}
+              {% endif %}
+              <!-- {% if update %}
+              <h3 class="bid">
+                New Bid: <i class="fa-solid fa-indian-rupee-sign rupee-icon"></i>{{motorcycle.current_bid.bid_amount|format_number }} by
+                {{motorcycle.current_bid.bidder.firstName}}
+              </h3>
+              {% endif %} -->
+            </div>
+            <div class="auction-status">
+              <p class="listing-status">
+                {% if motorcycle.isExpired %}
+                {% if motorcycle.sold %}
+                {% if winner %}
+                 sold in Rs. {{ highest_bid|format_number }} to {{winner}}
+                {% else %}
+                No bids were placed.
+                {% endif %}
+                {% else %}
+                No buyer found.
+                {% endif %}
+                {% endif %}
+              </p>
+            </div>
+          </div>
+          <div class="specifications">
+            <div class="table-row">
+              <div class="table-column">
+                <table>
+                  <tr>
+                    <th>Maker</th>
+                    <td>{{ motorcycle.brand }}</td>
+                  </tr>
+                  <tr>
+                    <th>Displacement</th>
+                    <td>{{ motorcycle.displacement }} cc</td>
+                  </tr>
+                  <tr>
+                    <th>Power</th>
+                    <td>{{ motorcycle.power }} bhp</td>
+                  </tr>
+                  <tr>
+                    <th>Mileage</th>
+                    <td>{{ motorcycle.mileage }} km/l</td>
+                  </tr>
+                  <tr>
+                    <th>Fuel Tank Capacity</th>
+                    <td>{{ motorcycle.fuel_capacity }} ltrs</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="table-column">
+                <table>
+                  <tr>
+                    <th>Body Type</th>
+                    <td>{{ motorcycle.category }}</td>
+                  </tr>
+                  <tr>
+                    <th>Cylinders</th>
+                    <td>{{ motorcycle.cylinders }}</td>
+                  </tr>
+                  <tr>
+                    <th>Torque</th>
+                    <td>{{ motorcycle.torque }} Nm</td>
+                  </tr>
+                  <tr>
+                    <th>Top Speed</th>
+                    <td>{{ motorcycle.top_speed }} kmph</td>
+                  </tr>
+                  <tr>
+                    <th>Starting Bid</th>
+                    <td><i class="fa-solid fa-indian-rupee-sign rupee-icon"> {{ motorcycle.start_price|format_number }}</td>
+                  </tr>                  
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="summary">
+            <p>{{ motorcycle.summary }}</p>
+          </div>
+        </div>
+      </div>
+      {% if user.is_authenticated %}
+      {% if motorcycle.isExpired %}
+      {% if motorcycle.start_price < motorcycle.current_bid.bid_amount %}
+      <div class="auction-result">
+        <h1>Auction has ended</h1>
+        <div class="auction-end-message">
+          <p>Final bid: Rs. {{motorcycle.current_bid.bid_amount|format_number}}</p>
+          <p>
+            sold to:
+            <a
+              href="{% url 'user_profile' username=motorcycle.current_bid.bidder.username %}">@{{motorcycle.current_bid.bidder.username}}</a>
+          </p>
+        </div>
+    </div>
+    {% else %}
+    <div class="auction-result">
+      <p>Auction has ended</p>
+      <div class="auction-end-message">
+        <p>No bid was placed</p>
+        <p>No buyer found</p>
+      </div>
+    </div>
+    {% endif %}
+    {% else %}
+    {% if not motorcycle.sold and not isOwner %}  
+    <div class="bidding-container">
+      <form class="bid-form" action="{% url 'motorcycle' name=motorcycle.name %}?id={{ motorcycle.id }}" method="POST">
+        {% csrf_token %}
+        <div class="bid-form-group">
+          <div class="new-bid-heading">
+            <label class="label" id="label-bid" for="newBid">New Bid</label>
+          </div>
+          <div class="bid-inputs">
+            <div class="inputs">
+              <input type="hidden" id="initialBidAmount" value="{{ motorcycle.current_bid.bid_amount|default:motorcycle.start_price }}"/>
+              <input class="bid-input" type="number" min="{{ motorcycle.current_bid.bid_amount|default:motorcycle.start_price }}" name="newBid"
+                placeholder="Add New Bid Here" id="bidNumber"/>
+            </div>
+            <div class="inputs">
+              <input class="bid-input" type="range" min="{{ motorcycle.current_bid.bid_amount|default:motorcycle.start_price }}" max="10000000" step="50000"
+                value="{{ motorcycle.current_bid.bid_amount|default:motorcycle.start_price }}" name="newBidRange" id="bidRange"/>
+            </div>
+            <div class="rangeDisplay">
+              <p id="rangeValueDisplay">{{ motorcycle.current_bid.bid_amount|default:motorcycle.start_price|format_number }}</p>  
+            </div>
+          </div>
+          <div class="button-box">
+            <button class="buttonOne" type="submit" role="button">Submit Bid</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    {% elif isOwner %}
+    <p>As the owner, you cannot place bids on your own motorcycle.</p>
+    {% endif %}
+    {% endif %}
+    {% endif %}
+    <div class="comments">
+      <h2>Comments <span><i class="fa-solid fa-comments" id="toggle-comments-icon"></i></span></h2>
+      <br />
+      {% if user.is_authenticated %}
+      <form id="comment-form" class="comment-form" action="{% url 'add_comment' name=motorcycle.name %}?id={{ motorcycle.id }}" method="POST">
+        {% csrf_token %}
+        <label class="label" id="label-comment" for="com"><strong>@{{ user }}</strong></label>
+        <div class="comment-form-group">
+          <textarea class="new-comment" name="newComment" placeholder="Add new comment" rows="1" cols="80"></textarea>
+          <button type="submit" class="button-post-comment" role="button">
+            <i class="fa-solid fa-message"></i>
+          </button>
+        </div>
+      </form>
+      {% endif %}
+      <br />
+      <ul class="comments-list" id="comments-section">
+        {% csrf_token %}
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <p class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% for comment, replies in comments_with_replies %}
+        <li class="comment-item {% if forloop.counter > 3 %}hidden-comment{% endif %}">
+          <div class="comment-user-pic">
+            {% if comment.author.profile_picture %}
+            <img class="comment-user-profile-pic" src="{{ comment.author.profile_picture.url }}" alt="User Pic" />
+            {% else %}
+            <img src="/path/to/default/image.jpg" alt="Default User Pic" />
+            {% endif %}
+          </div>
+          <div class="comment">
+            <div class="comment-author-username">
+              <a href="{% url 'user_profile' username=comment.author %}" class="comment-author"><strong>@{{comment.author }}</strong></a>
+            </div>
+            <div class="comment-message">
+              <p class="comment-text">{{ comment.message }}</p>
+              <p class="comment-toggle" id="comment-ellipsis"></p>
+            </div>
+            <div class="comment-actions">
+              <button class="like-btn"><i class="fa-regular fa-heart like-icon" id="like-icon"></i></button>
+              <button class="reply-btn" data-comment-id="{{ comment.id }}" data-listing-id="{{ motorcycle.id }}"
+                data-username="{{ comment.author.username }}" data-name="{{ motorcycle.name }}"><i class="fa-solid fa-reply"></i></button>
+              {% if user == comment.author or user == motorcycle.owner or user.is_superuser %}
+              <form action="{% url 'delete_comment' comment.id %}" method="POST" style="display:inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="delete-comment-button"><i class="fa-solid fa-trash-can"></i></button>
+              </form>
+              {% endif %}
+              {% if replies|length > 2 %}
+              <button id="toggle-reply-btn" class="toggle-replies-btn" data-comment-id="{{ comment.id }}"></button>
+              {% endif %}
+            </div>
+            <!-- Container for all replies and sub-replies -->
+            <ul class="replies" data-comment-id="{{ comment.id }}">
+              {% for reply in replies %}
+              <li class="reply-item">
+                <div class="reply-user-pic">
+                  {% if reply.author.profile_picture %}
+                  <img class="reply-user-profile-pic" src="{{ reply.author.profile_picture.url }}" alt="User Pic" />
+                  {% else %}
+                  <img src="/path/to/default/image.jpg" alt="Default User Pic" />
+                  {% endif %}
+                </div>
+                <div class="reply">
+                  <a href="{% url 'user_profile' username=reply.author %}" class="reply-author"><strong>@{{ reply.author}}</strong></a>
+                  <div class="reply-message">
+                    <p class="reply-text">
+                      {% if reply.parent_id == comment.id %}
+                      <a href="{% url 'user_profile' username=comment.author.username %}">@{{ comment.author.username}}</a>
+                      {% else %}
+                      <a href="{% url 'user_profile' username=reply.parent.author.username %}">@{{ reply.parent.author.username }}</a>
+                      {% endif %}
+                      {{ reply.message }}
+                    </p>
+                  </div>
+                  <div class="reply-actions">
+                    <button class="like-btn"><i class="fa-regular fa-heart like-icon" id="like-icon"></i></button>
+                    <button class="reply-btn" data-comment-id="{{ comment.id }}" data-reply-id="{{ reply.id }}"
+                    data-listing-id="{{ motorcycle.id }}" data-username="{{ reply.author.username }}" data-name="{{ motorcycle.name }}"><i class="fa-solid fa-reply"></i></button>
+                    {% if user == reply.author or user == motorcycle.owner or user.is_superuser %}
+                    <form action="{% url 'delete_comment' reply.id %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-comment-button"><i class="fa-solid fa-trash-can"></i></button>
+                    </form>
+                    {% endif %}
+                  </div>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      <button id="load-more-btn" class="load-more-btn"></button>
+    </div>
+  </div>
+  </div>
+</main>
+<script src="{% static 'auction/js/motorcycle4.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends "auction/layout.html" %}
+{% load static %}
+{% load custom_filters %}
+{% block body %}
+<main id="main">
+    <div class="home-select-list home-sticky-form" id="sticky-form">
+        <form action="{% url 'filter_result' %}" method="POST" class="filter-form" id="filter-form-id">
+            {% csrf_token %}
+            <div class="home-filters">
+                <div class="dropdown">
+                    <div class="dropbtn"><span>Brand</span><i class="fa-solid fa-caret-right"
+                            id="caret"></i></div>
+                    <input type="hidden" name="brand">
+                    <div class="dropdown-content">
+                        {% for brand in brands %}
+                        <p class="options" data-value="{{ brand.brand_name }}">{{ brand.brand_name }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="search-box">
+                    <label for="search_query" id="search-label">Search by name</label>
+                    <input class="search-input" type="text" name="search_query" placeholder="" id="search-input">
+                </div>
+                <div class="dropdown">
+                    <div class="dropbtn"><span>Category</span><i class="fa-solid fa-caret-left"
+                            id="caret"></i></div>
+                    <input type="hidden" name="category">
+                    <div class="dropdown-content">
+                        {% for category in categories %}
+                        <p class="options" data-value="{{ category.category_name }}">{{ category.category_name }}
+                        </p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="filter-btn-container">
+                <button type="submit" class="buttonOne " role="button">Filter</button>
+            </div>
+        </form>
+    </div>
+    <div class="hero-bg-image">
+        <img src="" alt="">
+    </div>
+    <div class="hero-bg-text">
+        <p class="welcome-note">Welcome to auction club</p>
+        <!-- <button>Active Listings</button> -->
+    </div>    
+    {% if recentlisted %}
+    <div class="content-heading-container">
+        <h3 class="content-heading">Recently Listed Motorcycles</h3>
+    </div>
+    <div class="carousel-wrapper">
+        <div class="carousel-container">
+            {% for motorcycle in recentlisted %}
+                <div class="card">
+                    <a href="{% url 'motorcycle' name=motorcycle.name %}?id={{ motorcycle.id }}"><img
+                            class="card-img-top" src="{{ motorcycle.image_url }}" alt="{{ motorcycle.name }}"></a>
+                    {% if motorcycle.isExpired and not sold %}
+                    <div class="sold-stamp">
+                        <p>SOLD</p>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <div class="card-caption">
+                            <a href="{% url 'motorcycle' name=motorcycle.name %}?id={{ motorcycle.id }}"
+                                class="card-title">{{ motorcycle.name }}</a>
+                            <p class="starting-bid-price"><sub>Bid starts from: </sub><i
+                                    class="fa-solid fa-indian-rupee-sign"></i>{{ motorcycle.start_price|format_number }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    <section class="about-section">
+        <div class="content-heading-container">
+            <h3 class="content-heading">About Us</h3>
+        </div>
+        <div class="about-content">
+            <div class="about-image">
+                <img class="about-img" style="filter: blur(2px);" src="{% static 'auction/images/img7.jpg' %}" alt="{{ motorcycle.name }}">
+            </div>
+            <div class="about-text">
+                <p>A motorcycle auction site or club serves as a dynamic and vibrant marketplace for motorcycle enthusiasts,
+                    collectors, and sellers. This platform allows users to browse, bid on, and purchase a wide range of
+                    motorcycles, from vintage classics to the latest models. Members can list their motorcycles for auction,
+                    providing detailed descriptions, high-quality images, and comprehensive specifications to attract potential
+                    buyers. The site often features advanced search and filtering options, enabling users to find motorcycles
+                    that match their preferences and budgets. Additionally, the auction system is equipped with features like
+                    real-time bidding, countdown timers, and notifications, ensuring an engaging and competitive bidding
+                    experience. Beyond transactions, the platform fosters a sense of community among motorcycle aficionados by
+                    offering forums, discussion boards, and events where members can share insights, experiences, and tips.
+                    Whether you're looking to buy, sell, or simply connect with fellow motorcycle enthusiasts, a motorcycle
+                    auction site or club offers a comprehensive and interactive environment to meet all your motorcycling needs.
+                </p>
+            </div>
+        </div>
+    </section>
+</main>
+<script src="{% static 'auction/js/index4.js' %}"></script>
+{% endblock %}

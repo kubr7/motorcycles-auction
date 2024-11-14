@@ -1,0 +1,121 @@
+// Create List
+
+.createList {
+  @include flex-row-center;
+  height: auto;
+  margin-top: 1rem;
+}
+
+.listing-form {
+  @include flex-col-center;
+  height: auto;
+  margin: auto;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: $box-shadow;
+
+  width: 100%;
+  max-width: 80%;
+}
+
+.createForm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  position: relative;
+
+  p {
+    margin: 1.5rem;
+    width: 100%s;
+
+    label {
+      margin: 5px 0 0 5px;
+      display: block;
+      text-transform: capitalize;
+      font: {
+        size: clamp(0.625rem, 2vw, 0.75rem);
+        weight: bold;
+      }
+    }
+
+    input[type="text"],
+    input[type="url"],
+    input[type="number"],
+    select {
+      width: 100%;
+      height: auto;
+      text-indent: 5px;
+      line-height: 1;
+      outline: none;
+      background-color: transparent;
+      transition: all 0.2s ease;
+      @include input-border;
+    }
+
+    input[type="text"]:focus,
+    input[type="url"]:focus,
+    input[type="number"]:focus,
+    select:focus {
+      outline: none;
+      background-color: transparent;
+      @include input-border-focus;
+    }
+
+    textarea {
+      height: 60px;
+      width: 100%;
+      padding: 10px;
+      outline: none;
+      @include input-border;
+      transition: all 0.2s ease;
+      background-color: transparent;
+    }
+
+    textarea:focus {
+      outline: none;
+      @include input-border-focus;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .createForm {
+    width: 100%;
+    flex-direction: column;
+
+    p {
+      width: 100%;
+      margin: 0.5rem 0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .createForm {
+    width: 100%;
+    flex-direction: column;
+
+    p {
+      width: 100%;
+      margin: 0.5rem 0;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .createForm {
+    width: 100%;
+    flex-direction: column;
+
+    p {
+      width: 100%;
+      margin: 0.5rem 0;
+
+      select {
+        width: 40%;
+      }
+    }
+  }
+}

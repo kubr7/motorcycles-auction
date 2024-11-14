@@ -1,0 +1,130 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <meta name="csrf-token" content="{% csrf_token %}"> -->
+  <meta name="description" content="An auction site where you can bid on items">
+  <meta name="keywords" content="auction, bidding, online auction">
+  <meta name="author" content="kubrteh>
+  
+  <title>{% block title %}Auctions{% endblock %}</title>
+  <link rel="icon" type="image/x-icon" href="{% static 'auction/images/favicon.png' %}">
+
+  <link rel="stylesheet" type="text/css" href="{% static 'auction/css/styles4.css' %}" />
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Baskervville+SC&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baskervville+SC&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header id="header">
+    <a href="{% url 'index' %}"><img class="logo" src="{% static 'auction/images/logo.png' %}" alt="Logo" /></a>
+    <div class="site-name">
+      <a href="{% url 'index' %}">
+        <p>{{ site_name }}</p>
+      </a>
+    </div>
+    <nav class="nav">
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a id="navLink" class="nav-link" href="{% url 'index' %}"><span class="tooltip"><i
+                class="fa-solid fa-house"></i><span class="tooltiptext">Home</span></span></a>
+        </li>
+        <li class="nav-item">
+          <a id="navLink" class="nav-link" href="{% url 'active_listing' %}"><span class="tooltip"><i
+                class="fa-solid fa-receipt"></i><span class="tooltiptext">Active Listings</span></span></a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'create' %}"><span class="tooltip"><i
+                class="fa-solid fa-square-plus"></i><span class="tooltiptext">Create</span></span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'watchlist' username=request.user.username %}"><span class="tooltip"><i
+                class="fa-solid fa-list"></i><span class="tooltiptext">Watchlist</span></span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'users' %}"><span class="tooltip"><i class="fa-solid fa-users"></i><span
+                class="tooltiptext">All Users</span></span></a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}"><span class="tooltip"><i
+                class="fa-solid fa-right-to-bracket"></i><span class="tooltiptext">Log In</span></span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'register' %}"><span class="tooltip"><i
+                class="fa-solid fa-user-plus"></i><span class="tooltiptext" role="tooltip">Register</span></span></a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+    <!-- template.html -->
+
+    <div class="sign-in-auth">
+      {% if user.is_authenticated %}
+      <div class="profile-container">
+        <a href="{% url 'user_profile' username=user.username %}" class="profile-link">
+          <img class="profile-image"
+            src="{% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}{% static 'auction/images/user.png' %}{% endif %}"
+            alt="{% if user.profile_picture %}{{ user.username }}'s Profile Picture{% else %}Default Profile Picture{% endif %}" />
+        </a>
+      </div>
+      <div class="sign-in" id="sign-in">
+        <p><strong>{{ user.username }}</strong></p>
+      </div>
+      {% else %}
+      <div class="sign-in-here">Sign in</div>
+      <div class="profile-container">
+        <a href="{% url 'login' %}" class="profile-link">
+          <img class="profile-image"
+            src="{% if user.profile_picture %}{{ user.profile_picture.url }}{% else %}{% static 'auction/images/user.png' %}{% endif %}"
+            alt="{% if user.profile_picture %}{{ user.username }}'s Profile Picture{% else %}Default Profile Picture{% endif %}" />
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </header>
+{% block body %} 
+{% endblock %}
+{% block newsletter %}
+<section class="news-letter-section">
+  <div class="content-heading-container">
+    <h3 class="content-heading">Newsletter</h3>
+  </div>
+  <form class="newsletter-form" action="action_page.php">
+    <div class="news-letter-container">
+      <h2>Subscribe to our Newsletter</h2>
+    </div>
+  
+    <div class="news-letter-container" style="background-color:white">
+      <input type="text" placeholder="Name" name="name" required>
+      <input type="text" placeholder="Email address" name="mail" required>
+      <label>
+        <input type="checkbox" checked="checked" name="subscribe"> Daily Newsletter
+      </label>
+    </div>
+  
+    <div class="subscribe-btn">
+      <button type="submit" class="buttonOne" role="button">Subscribe</button>
+    </div>
+  </form>
+</section>
+{% endblock newsletter %}
+<footer>
+  <div class="footer-content">
+    <p>&copy; 2023 Auction Site. All rights reserved.</p>
+  </div>
+</footer>
+<script src="{% static 'auction/js/layout2.js' %}"></script>
+<!-- <script src="{% static 'auction/js/active_listing.js' %}"></script> -->
+</body>
+</html>
