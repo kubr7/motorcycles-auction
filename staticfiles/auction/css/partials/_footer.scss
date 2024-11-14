@@ -1,0 +1,19 @@
+footer {
+  @include width-height(100%, auto);
+  display: block;
+  width: 100%;
+  position: relative;
+  left: 0;
+  bottom: 0;
+  // margin-top: 2rem;
+  text-align: center;
+  background-color: $color1;
+}
+
+.footer-content {
+  font-size: clamp(0.875rem, 2vw, 1rem);
+  font-weight: 600;
+  font-family: "Courier New", Courier, monospace;
+  color: #000;
+  padding: 0.5rem;
+}

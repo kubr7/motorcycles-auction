@@ -1,0 +1,813 @@
+// Listing
+
+.listing-page {
+  display: flex;
+}
+
+.listing-bid-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  // width: 50%;
+  width: 30%;
+  position: -webkit-sticky; /* For Safari */
+  position: sticky;
+  top: 0;
+  background-color: $color2;
+  box-sizing: border-box;
+  height: calc(100vh - 82.2px);
+  padding: 1rem;
+}
+
+.closebtn {
+  display: none;
+}
+
+.open {
+  display: none;
+}
+
+.bid-list {
+  padding: 0;
+  list-style-position: inside;
+  list-style-type: decimal;
+
+  .bidding-listing-name {
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+    font-weight: 700;
+    color: $color1;
+  }
+
+  .bid-item {
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+    font-weight: 700;
+
+    .toggle-details {
+      margin-left: 10px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-size: clamp(0.5rem, 2vw, 0.75rem);
+    }
+
+    .bid-details {
+      display: none; /* Hide the details by default */
+    }
+  }
+
+  p.no-bids {
+    font-size: clamp(0.5rem, 2vw, 0.625rem);
+  }
+}
+
+.see-bid-info-link {
+  color: $accent-color;
+  width: 8rem;
+  line-height: 2.5;
+  height: 1.5rem;
+  font-size: clamp(0.5rem, 2vw, 0.625rem);
+  position: relative;
+  display: block;
+  text-align: center;
+  padding: 0;
+  margin: auto;
+  font-weight: 600;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+  &:hover {
+    color: $color1;
+    background-color: $bg-color;
+  }
+}
+
+.listing-detail {
+  position: relative;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.12),
+    0px 1px 2px 0px rgba(0, 0, 0, 0.24);
+}
+
+.update-message-alert {
+  width: 100%;
+  margin: auto;
+  .message {
+    text-align: center;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0;
+  }
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.watchlist {
+  .add-to-watch,
+  .remove-from-watch,
+  .close_auction {
+    padding: 2px 8px;
+  }
+}
+
+.timer-watch p {
+  margin: 0;
+  font-weight: 700;
+  font-size: clamp(0.75rem, 3vw, 0.875rem);
+}
+
+.auction-close {
+  justify-content: end;
+}
+
+.listing-details {
+  text-align: justify;
+  overflow: auto;
+  height: auto;
+  padding: 1rem 0;
+}
+
+.details-box {
+  // @include flex-row-center;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  width: 100%;
+  height: auto;
+  background-color: transparent;
+}
+
+.name-img {
+  width: auto;
+  height: 100%;
+  padding: 1rem;
+  align-content: center;
+
+  .bike-name {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    color: #931a25;
+    text-align: start;
+  }
+}
+
+.image-container {
+  overflow: hidden;
+}
+
+.card {
+  width: auto;
+}
+
+.card-img {
+  @include card-img;
+  height: 400px;
+  object-fit: contain;
+}
+
+.specifications-info {
+  width: 100%;
+  height: auto;
+  display: flex;
+  padding: 1rem;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.info {
+  padding: 0.5rem;
+  background-color: rgba(95, 158, 160, 0.5);
+}
+
+.owner-details {
+  @include flex-row-center($justify: flex-end);
+  .owner-name {
+    margin: 0;
+    font-weight: 700;
+    text-transform: capitalize;
+    font-size: clamp(0.75rem, 2vw, 1rem);
+  }
+  .owner-username {
+    margin: 0;
+    font-size: clamp(0.5rem, 2vw, 0.75rem);
+    font-style: italic;
+    font-weight: 800;
+    text-decoration: none;
+    color: $black;
+    margin-left: 0.5rem;
+
+    &:hover {
+      color: #931a25;
+    }
+  }
+}
+
+.bid-info {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: flex-end;
+
+  .bid {
+    margin: 0;
+    font-weight: 700;
+    font-size: clamp(0.625rem, 3vw, 0.875rem);
+  }
+}
+
+.auction-status {
+  display: flex;
+  justify-content: flex-end;
+
+  .listing-status {
+    font-size: clamp(0.875rem, 3vw, 1.25rem);
+    font-weight: 900;
+    margin: 0;
+    text-transform: capitalize;
+  }
+}
+
+.specifications {
+  width: 100%;
+}
+
+.table-row {
+  @include flex-row-center;
+  margin-left: -5px;
+  margin-right: -5px;
+
+  .table-column {
+    float: left;
+    width: 50%;
+    padding: 5px;
+  }
+
+  /* Clearfix (clear floats) */
+  .table-row::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+  th,
+  td {
+    font-size: $font-table;
+    text-align: left;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+}
+
+.summary {
+  padding: 1rem 0;
+
+  p {
+    font-size: clamp(0.625rem, 3vw, 0.875rem);
+  }
+}
+
+.auction-result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: #931a25;
+}
+
+.auction-end-message {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+
+  p {
+    margin: 0;
+    font-weight: 700;
+    font-size: clamp(0.75rem, 2vw, 1.125rem);
+    text-transform: capitalize;
+    a {
+      font-style: italic;
+      text-decoration: none;
+    }
+  }
+}
+
+.bid-form {
+  background-color: #5f9ea0;
+}
+
+.bid-form-group {
+  @include flex-col-center($justify: space-evenly);
+  width: 100%;
+  gap: 0.5rem;
+}
+
+#label-bid {
+  font-size: clamp(0.875rem, 2vw, 1.75rem);
+  font-weight: 900;
+  color: #931a25;
+  margin: 0;
+}
+
+.bid-inputs {
+  width: 80%;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 3%;
+  padding: 0.5rem;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.inputs {
+  width: 30%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bid-input[type="number"] {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  text-align: center;
+  background-color: transparent;
+  border-bottom: 1px dashed black;
+  font-size: clamp(0.875rem, 3vw, 1.25rem);
+}
+
+.bid-input[type="number"]:hover {
+  border-bottom: 1px solid black;
+}
+
+/* Styling the range input */
+.bid-input[type="range"] {
+  appearance: none; /* Remove default appearance */
+  width: 100%; /* Full-width */
+  height: 0.5rem; /* Track height */
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none; /* Remove default outline */
+  // background: #ddd; /* Track color */
+  // background: linear-gradient(to right, #4CAF50 0%, #ddd 0%); /* Initial gradient */
+}
+
+/* Styling the thumb for Webkit browsers (Chrome, Safari, Opera) */
+.bid-input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Remove default appearance */
+  appearance: none;
+  width: 0.5rem; /* Thumb width */
+  height: 0.5rem; /* Thumb height */
+  background: $color1; /* Thumb color */
+  cursor: pointer; /* Pointer cursor on hover */
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2); /* Thumb shadow */
+}
+
+// /* Styling the thumb for Mozilla browsers (Firefox) */
+// .bid-input[type="range"]::-moz-range-thumb {
+//   width: 20px; /* Thumb width */
+//   height: 20px; /* Thumb height */
+//   background: #4CAF50; /* Thumb color */
+//   border-radius: 50%; /* Thumb border radius */
+//   cursor: pointer; /* Pointer cursor on hover */
+//   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2); /* Thumb shadow */
+// }
+
+// /* Styling the thumb for Internet Explorer */
+// .bid-input[type="range"]::-ms-thumb {
+//   width: 20px; /* Thumb width */
+//   height: 20px; /* Thumb height */
+//   background: #4CAF50; /* Thumb color */
+//   border-radius: 50%; /* Thumb border radius */
+//   cursor: pointer; /* Pointer cursor on hover */
+//   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2); /* Thumb shadow */
+// }
+
+/* Styling the track for Webkit browsers (Chrome, Safari, Opera) */
+.bid-input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%; /* Full-width */
+  height: 8px; /* Track height */
+  // background: #ddd; /* Track color */
+  border-radius: 5px; /* Track border radius */
+}
+
+// /* Styling the track for Mozilla browsers (Firefox) */
+// .bid-input[type="range"]::-moz-range-track {
+//   width: 100%; /* Full-width */
+//   height: 8px; /* Track height */
+//   background: #ddd; /* Track color */
+//   border-radius: 5px; /* Track border radius */
+// }
+
+// /* Styling the track for Internet Explorer */
+// .bid-input[type="range"]::-ms-track {
+//   width: 100%; /* Full-width */
+//   height: 8px; /* Track height */
+//   background: #ddd; /* Track color */
+//   border-radius: 5px; /* Track border radius */
+//   border: none;
+//   color: transparent;
+// }
+
+.rangeDisplay {
+  margin: 0;
+  width: 30%;
+}
+
+#rangeValueDisplay {
+  margin: 0;
+  font-size: clamp(0.875em, 3vw, 1.25rem);
+  text-align: center;
+}
+
+.button-box {
+  display: flex;
+  justify-content: center;
+  width: 20rem;
+
+  .submit-icon {
+    margin-left: 0.5rem;
+  }
+}
+
+.comments {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: $bg-color;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.12),
+    0px 1px 2px 0px rgba(0, 0, 0, 0.24);
+}
+
+.comments h2 {
+  margin: 0;
+}
+
+.fa-comments {
+  margin-left: 1rem;
+}
+
+.comment-form-group {
+  @include flex-row-center;
+  flex-wrap: nowrap;
+  height: auto;
+
+  #label-comment {
+    margin: 0;
+    padding: 0;
+    text-align: end;
+    margin-right: 7px;
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+  }
+
+  .new-comment {
+    width: 100%;
+    // padding: 0;
+    transition: height 0.2s;
+    @include input-border;
+  }
+
+  .new-comment:focus {
+    @include input-border-focus;
+  }
+
+  .new-comment.full-mode {
+    height: 200px;
+  }
+}
+
+.comments-list {
+  margin: 0;
+  padding: 0;
+}
+
+.messages p {
+  font-weight: 800;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: clamp(0.875rem, 2vw, 1.25rem);
+}
+
+.hidden-comment {
+  display: none;
+}
+
+.comment-item {
+  display: flex;
+  align-items: flex-start;
+  list-style-type: none;
+  margin-bottom: 0.15rem;
+  background-color: #f0f8ff;
+  padding: 0.5rem;
+}
+
+.comment-user-pic {
+  margin-right: 4px;
+}
+
+.comment-user-profile-pic {
+  display: block;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: fill;
+}
+
+.comment {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100%;
+  // font-size: clamp(0.625rem, 2vw, 0.75rem);
+}
+
+.comment-author-username {
+  .comment-author {
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+    text-decoration: none;
+    color: $black;
+
+    &:hover {
+      color: $accent-color;
+    }
+  }
+}
+
+.comment-message {
+  position: relative;
+  max-width: 100%;
+  height: auto;
+
+  .comment-text {
+    font-size: clamp(0.75rem, 2vw, 0.875rem);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    margin: 0;
+  }
+
+  .comment-toggle {
+    margin: 0;
+    color: rgb(40, 124, 242);
+    font-size: clamp(0.5rem, 2vw, 0.625rem);
+    text-align: end;
+    cursor: pointer;
+  }
+}
+
+.comment-actions {
+  @include actions;
+
+  button {
+    @include reply-comments-actions-btn;
+    width: auto;
+    // margin: 0 5px;
+  }
+
+  .toggle-replies-btn {
+    @include load-hide-reply-btn;
+    width: 45%;
+    padding: 0 4px 3px 4px;
+    font-weight: 800;
+    margin: 0;
+  }
+}
+
+.reply-form {
+  @include reply-form;
+
+  .reply-input {
+    @include reply-input;
+  }
+}
+
+.replies {
+  padding: 0;
+}
+
+.reply-item {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 0.25rem;
+}
+
+.reply-user-pic {
+  margin-right: 4px;
+}
+
+.reply-user-profile-pic {
+  display: block;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: fill;
+}
+
+.reply {
+  width: 100%;
+}
+
+.reply-author {
+  text-decoration: none;
+  color: $black;
+  font-size: clamp(0.625rem, 2vw, 0.75rem);
+
+  &:hover {
+    color: $accent-color;
+  }
+}
+
+.reply-message {
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+
+  .reply-text {
+    overflow: hidden;
+    // display: -webkit-box;
+    // -webkit-line-clamp: 1; /* Show only 1 line initially */
+    // -webkit-box-orient:horizontal;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: clamp(0.625rem, 2vw, 0.75rem);
+    text-align: left;
+    margin: 0;
+
+    a {
+      color: $black;
+      font-size: clamp(0.625rem, 2vw, 0.75rem);
+      font-weight: 600;
+      text-decoration: none;
+
+      &:hover {
+        color: $accent-color;
+      }
+    }
+  }
+
+  .reply-toggle {
+    font-size: clamp(0.5rem, 2vw, 0.625rem);
+    // display: none;
+    cursor: pointer;
+    color: blue; /* Optional: style the ellipsis */
+  }
+}
+
+.reply-actions {
+  @include actions;
+
+  button {
+    @include reply-comments-actions-btn;
+    width: auto;
+    // margin: 0 5px;
+  }
+}
+
+.reply-form {
+  @include reply-form;
+
+  .reply-input {
+    @include reply-input;
+  }
+}
+
+.load-more-btn {
+  color: rgb(40, 124, 242);
+  @include load-hide-comments-btn;
+}
+
+.fa-message {
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.5);
+    color: #931a25;
+  }
+}
+
+// Media Queries
+
+// @media screen and (max-width: 600px) {
+//   .table-column {
+//     width: 100%;
+//   }
+// }
+
+@media (max-width: 992px) {
+  .listing-bid-data {
+    display: none;
+    position: fixed;
+    top: 78.4px;
+    left: 0;
+    width: 25%;
+    z-index: 1000;
+  }
+
+  .closebtn {
+    display: block;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-weight: 900;
+    cursor: pointer;
+    color: $color1;
+  }
+
+  .open {
+    display: block;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-weight: 900;
+    cursor: pointer;
+  }
+
+  .listing-bid-data.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    height: calc(100vh - 78.4px);
+    padding: 1rem;
+    transform: translateX(0);
+  }
+
+  .details-box {
+    flex-wrap: wrap;
+  }
+
+  .card-img {
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .details-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .bid-list {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  .listing-bid-data {
+    width: 100%;
+    top: 134.8px;
+  }
+
+  .listing-bid-data.active {
+    height: calc(100vh - 134.8px);
+  }
+
+  .watchlist {
+    .add-to-watch,
+    .remove-from-watch,
+    .close_auction {
+      width: auto;
+    }
+  }
+
+  .table-row {
+    @include flex-col-center;
+
+    .table-column {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 524px) {
+  .listing-bid-data {
+    top: 137.6px;
+  }
+
+  .listing-bid-data.active {
+    height: calc(100vh - 137.6px);
+  }
+}

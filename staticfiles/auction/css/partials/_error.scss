@@ -1,0 +1,35 @@
+.error {
+  width: 100%;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column wrap;
+  text-transform: uppercase;
+}
+
+.message {
+  color: #c40c0c;
+  font-size: clamp(1rem, 2vw, 2rem);
+  font-weight: 700;
+  text-align: center;
+  margin: 0;
+}
+
+.back-btn {
+  width: 6rem;
+  height: 1.5rem;
+  border: none;
+  outline: none;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 1rem;
+  color: #1a5319;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+
+  .fa-square-caret-left {
+    margin-left: 1rem;
+  }
+}

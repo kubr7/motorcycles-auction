@@ -1,0 +1,584 @@
+// styless4.scss
+@import "partials/variables";
+@import "partials/mixins";
+@import "partials/activeListing";
+@import "partials/createList";
+@import "partials/footer";
+@import "partials/editUser";
+@import "partials/header";
+@import "partials/listing";
+@import "partials/login";
+@import "partials/userProfile";
+@import "partials/watchList";
+@import "partials/form";
+@import "partials/register";
+@import "partials/error";
+@import "partials/index";
+@import "partials/listingBids";
+@import "partials/allBids";
+// @import "partials/misc";
+
+* {
+  box-sizing: border-box;
+}
+html {
+  font-size: 16px;
+}
+
+body,
+html {
+  margin: 0;
+  height: 100%;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+  object-fit: cover;
+}
+
+ul.reply-list {
+  padding: 0;
+}
+
+#main {
+  width: 100%;
+  min-height: 80%;
+}
+
+// section {
+//   margin: 1rem;
+// }
+
+.rupee-icon {
+  font-size: 0.75rem, 2vw, 0.875rem;
+}
+
+.scroll-info {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+// .bg {
+//   background-color: $bg-color;
+// }
+
+.white-color {
+  p {
+    color: #931a25;
+  }
+}
+
+.no-letter-spacing {
+  letter-spacing: 0; /* Remove letter-spacing */
+}
+
+.content-heading-container {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  padding: 0 0.5rem;
+  align-items: center;
+  background-color: rgba(64, 224, 208, 0.2);
+  justify-content: space-between;
+
+  .content-heading {
+    width: 100%;
+    color: #0d1282;
+    text-align: start;
+    font-weight: 900;
+    font-size: $font-section-heading;
+  }
+}
+
+.user-listings .card {
+  width: 25rem;
+}
+
+.collection .card {
+  width: 25rem;
+}
+
+.card {
+  @include card-mixin;
+}
+
+// .card-img-top {
+//   aspect-ratio: 3/2;
+//   width: 100%;
+//   border-radius: 10px;
+//   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.12),
+//     0px 1px 2px 0px rgba(0, 0, 0, 0.24);
+// }
+
+// .card-body {
+//   padding: 10px;
+//   color: #0d1282;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 1rem;
+// }
+
+// .card-caption {
+//   @include width-height($width: 100%, $height: auto);
+//   @include flex-col-center($justify: space-between);
+//   text-align: justify;
+//   color: #080202;
+// }
+
+// .card-title {
+//   width: 100%;
+//   font-size: clamp(1rem, 2vw, 1.5rem);
+//   font-weight: 600;
+//   color: #080202;
+//   text-decoration: none;
+// }
+
+.starting-bid-price {
+  margin: 0;
+  width: 100%;
+  text-align: end;
+  font-weight: 700;
+  text-transform: capitalize;
+  font-size: clamp(0.875rem, 2vw, 1rem);
+}
+
+.detailsBtn {
+  @include details-btn-styles;
+
+  &:hover {
+    background-color: #11009e;
+    color: #ffffff;
+    text-decoration: none;
+  }
+}
+
+.add-to-watch,
+.remove-from-watch {
+  @include add-remove-button;
+}
+
+.add-to-watch:hover,
+.remove-from-watch:hover {
+  --_p: 100%;
+  transition: background-position 0.4s, background-size 0.4s, width 0.4s;
+}
+
+.listing-details {
+  text-align: justify;
+
+  .comments {
+    margin-top: 1rem;
+    padding: 1rem;
+    box-shadow: $card-box-shadow;
+  }
+}
+
+// Button- edit, save. Index Filter, Create,
+
+.buttonOne {
+  width: 16rem;
+  padding: 5px 10px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: clamp(0.5rem, 3vw, 0.875rem);
+  letter-spacing: 10px;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: #11009e;
+  font-family: "Baskervville SC", serif;
+  font-weight: 700;
+  transition: all 0.5s ease-in-out;
+
+  &:hover {
+    width: 200px;
+    background-color: #080145;
+    letter-spacing: 4px;
+  }
+}
+
+.button-post-comment {
+  width: 2rem;
+  border: none;
+  background: transparent;
+}
+
+// WatchList and Collection
+
+.watchList-page,
+.collection-page,
+.user-listings-page {
+  @include flex-row-center;
+}
+
+.watchList,
+.collection,
+.user-listings {
+  @include flex-row-center($justify: space-evenly);
+  @include width-height(80%, 100%);
+}
+
+// User-Listings
+
+.no-listing {
+  @include flex-row-center;
+  width: 80%;
+  height: 500px;
+  background-color: azure;
+  margin: auto;
+}
+
+// All User Page
+
+.all-users {
+  @include flex-col-center;
+}
+
+.user-list {
+  width: 80%;
+  list-style-type: decimal;
+  list-style-position: inside;
+  padding: 0;
+}
+
+.user {
+  display: grid;
+  grid-template-columns: 1rem 50% 20% 20%;
+  grid-template-rows: auto;
+  justify-content: center;
+  font-size: clamp(0.875rem, 2vw, 1rem);
+  margin-top: 5px;
+  padding: 0.5rem;
+  box-shadow: $box-shadow;
+
+  div {
+    .user-id {
+      margin: 0;
+      width: 1rem;
+    }
+
+    .user-link,
+    .collection-link,
+    .listings-link {
+      text-decoration: none;
+      color: $color1;
+      cursor: pointer;
+    }
+
+    .user-link {
+      font-size: clamp(0.875rem, 2vw, 1rem);
+      font-weight: 700;
+    }
+
+    .collection-link,
+    .listings-link {
+      text-align: center;
+    }
+  }
+}
+
+// NewLetter Section
+.news-letter-section {
+  padding: 1rem;
+  // background-color: $bg-color;
+  // box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  position: relative;
+  /* Style the form element with a border around it */
+  .newsletter-form {
+    padding: 50px;
+    border: 4px solid #f1f1f1;
+  }
+
+  /* Add some padding and a grey background color to containers */
+  .news-letter-container {
+    display: flex;
+    flex-flow: column wrap;
+    gap: 10px;
+    padding: 20px;
+    // background-color: #f1f1f1;
+  }
+
+  .subscribe-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem;
+  }
+
+  /* Style the input elements and the submit button */
+
+  input[type="text"] {
+    display: inline-block;
+    margin: auto;
+    width: 50%;
+    padding: 12px;
+    @include input-border;
+  }
+
+  input[type="text"]:focus {
+    @include input-border-focus;
+  }
+
+  /* Add margins to the checkbox */
+  input[type="checkbox"] {
+    margin-top: 16px;
+  }
+
+  /* Style the submit button */
+  input[type="submit"] {
+    background-color: $accent-color;
+    color: white;
+    border: none;
+  }
+
+  input[type="submit"]:hover {
+    background-color: $color3;
+  }
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+caption {
+  caption-side: top;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  font-weight: 700;
+  color: #333;
+  padding: 10px;
+}
+
+// Sold Stamp
+.sold-stamp {
+  left: -1rem;
+  color: #fff;
+  display: block;
+  position: absolute;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  background-color: #a00;
+  padding: 1rem 3rem;
+  width: 25px;
+  height: 25px;
+  text-shadow: 0 0 0.75em #444;
+  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);
+  font: bold 16px/1.2em Arial, Sans-Serif;
+  -webkit-text-shadow: 0 0 0.75em #444;
+  -webkit-box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);
+  transform: rotate(-45deg) scale(0.75, 1);
+  z-index: 10;
+
+  p {
+    font-size: clamp(0.625rem, 2vw, 0.75rem);
+    letter-spacing: 5px;
+    font-weight: 800;
+    width: 7rem;
+    margin: 0;
+    transform: translate(-53px, -10px);
+  }
+}
+.sold-stamp:before {
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  transform: scale(0.7);
+  -webkit-transform: scale(0.7);
+  border: 2px rgba(255, 255, 255, 0.7) dashed;
+  border-left: none;
+  border-right: none;
+}
+
+.pagination {
+  margin: 1rem;
+  padding: 1rem;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  font-weight: 600;
+  text-align: center;
+  text-transform: capitalize;
+
+  .step-links {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+    a {
+      margin: 0 8px;
+      color: $color3;
+      text-decoration: none;
+    }
+  }
+}
+
+/* For WebKit (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 8px; /* width of the entire scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #229091; /* color of the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $color3; /* color of the scrollbar handle */
+  border-radius: 0; /* roundness of the scrollbar handle */
+}
+
+/* For Firefox */
+::-webkit-scrollbar {
+  scrollbar-width: thin; /* "auto" or "thin" for the scrollbar width */
+  scrollbar-color: #888 #f1f1f1; /* color of the scrollbar handle and track */
+}
+
+//KeyFrames
+
+@keyframes headingSlideToRight {
+  from {
+    opacity: 0;
+    color: #2d7921;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    color: $black;
+    transform: translateX(0%);
+  }
+}
+
+@keyframes headingSlideToLeft {
+  from {
+    opacity: 0;
+    color: #2d7921;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    color: $black;
+    transform: translateX(0%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 993px) {
+  .sidebar.collapse {
+    display: block !important;
+  }
+}
+
+@media (max-width: 992px) {
+  .sidebar.collapse {
+    display: none;
+  }
+}
+
+@media (min-width: 993px) {
+  .side-hide-large {
+    display: none !important;
+  }
+  .sidebar.collapse {
+    display: block !important;
+  }
+}
+
+// Media Queries
+
+@media (max-width: 992px) {
+  .card {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 90%;
+  }
+
+  .news-letter-section {
+    input[type="text"] {
+      width: 100%;
+    }
+  }
+}
+
+/* Extra Small Devices (phones, 0px to 576px) */
+@media (max-width: 576px) {
+  /* Your CSS rules for extra small devices */
+  body {
+    background-color: lightblue;
+
+    .main {
+      width: 100%;
+    }
+  }
+
+  .card {
+    width: 80%;
+    margin: auto;
+  }
+
+  .buttonOne {
+    width: auto;
+  }
+
+  .user-list {
+    width: 100%;
+  }
+
+  .user {
+    grid-template-columns: 1rem 45% 25% 20%;
+  }
+
+  .news-letter-section {
+    .newsletter-form {
+      padding: 10px;
+    }
+  }
+
+  .newsletter-form {
+    .container {
+      h2 {
+        font-size: 1.25rem;
+      }
+    }
+
+  }
+}

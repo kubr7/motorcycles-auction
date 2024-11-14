@@ -1,0 +1,19 @@
+$black: #000;
+
+.all-total-bids {
+  position: relative;
+  width: 100%;
+  margin: 1rem;
+
+  .all-bids-table {
+    @include table;
+
+    td {
+      a {
+        text-decoration: none;
+        color: $black;
+        cursor: pointer;
+      }
+    }
+  }
+}

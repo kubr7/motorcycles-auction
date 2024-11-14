@@ -1,0 +1,70 @@
+.all-listing-bids {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+
+  p {
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    font-weight: 800;
+    text-transform: capitalize;
+  }
+}
+
+
+.all-listing-bids-table {
+  @include table;
+}
+
+.go-back-link {
+  width: 100%;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .back-link {
+    @include button-with-icon;
+    text-align: center;
+
+    .fa-solid {
+      color: $black;
+      font-size: clamp(0.875rem, 2vw, 1rem);
+
+      &:hover {
+        color: $color2;
+        font-size: clamp(1rem, 2vw, 1.5rem);
+      }
+    }
+  }
+}
+
+.back-link {
+  position: relative;
+  display: inline-block;
+}
+
+.back-link .tooltip-text {
+  visibility: hidden;
+  width: 100px;
+  background-color: $bg-color;
+  color: #fff;
+  text-align: center;
+  border: none;
+  padding: 3px;
+  position: absolute;
+  z-index: 1;
+  font-size: clamp(0.625rem, 2vw, 0.75rem);
+  top: 125%; /* Position the tooltip above the icon */
+  left: 50%;
+  opacity: 0;
+  transform: translateX(-50%);
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.back-link:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+  color: $color1;
+}

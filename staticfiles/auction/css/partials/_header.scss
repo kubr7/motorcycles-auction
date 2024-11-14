@@ -1,0 +1,217 @@
+// _partials/_header.scss
+header {
+  @include flex-row-center($justify: space-evenly);
+  height: auto;
+  padding: 0.5rem;
+  overflow: hidden;
+  // box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+
+.logo {
+  width: 75px;
+  height: 75px;
+  @include card-styles;
+}
+
+.site-name {
+  position: relative;
+
+  a {
+    text-decoration: none;
+
+    p {
+      margin: 0;
+      color: $logo-name-color;
+      font-family: $font-secondary;
+      animation: fadeIn 1s ease-out;
+      font: {
+        size: $font-site-name;
+        weight: 700;
+      }
+    }
+  }
+}
+
+.nav-menu {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  margin: 0 2em;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: $black;
+
+  font: {
+    size: $font-nav-links;
+    weight: 700;
+  }
+
+  .tooltip {
+    position: relative;
+    display: inline-block;
+  }
+
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 7rem;
+    height: auto;
+    background-color: transparent;
+    color: $logo-name-color;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    font-size: $font-text;
+    font-weight: 700;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, 10%);
+  }
+
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+}
+
+.sign-in-auth {
+  @include flex-col-center;
+  width: auto;
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+}
+
+.profile-link {
+  display: inline-block;
+
+  .profile-image {
+    display: block;
+    width: 48px;
+    height: 48px;
+    object-fit: fill;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+      rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  }
+}
+
+.sign-in p {
+  margin: 0;
+  font-size: $font-text;
+  color: $black;
+  letter-spacing: 1px;
+}
+
+.sign-in-here {
+  font-size: $font-text;
+  font-family: monospace;
+  font-weight: 600;
+  letter-spacing: -1px;
+  color: $color1;
+  text-align: end;
+  margin-right: 7px;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 6;
+  transition: background-color 0.5s ease-in, padding-top 0.5s ease-in,
+    margin-top 0.5s ease-in;
+}
+
+// Media Queries
+@media (max-width: 1200px) {
+  .logo {
+    width: 60px;
+    height: 60px;
+  }
+
+  .nav-item {
+    margin: 0 1em;
+  }
+
+  .profile-image {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media (max-width: 992px) {
+  .logo {
+    width: 50px;
+    height: 50px;
+  }
+
+  .nav-menu {
+    align-items: center;
+  }
+
+  .nav-item {
+    margin: 1em;
+  }
+
+  .sign-in-auth {
+    align-items: center;
+  }
+
+  .profile-link {
+    .profile-image {
+      width: 40px;
+      height: 40px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .profile-link {
+    .profile-image {
+      width: 34px;
+      height: 34px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .logo {
+    width: 64px;
+    height: 64px;
+  }
+
+  .nav-menu {
+    margin: 0;
+  }
+
+  .nav-item {
+    margin: 0.8em;
+  }
+
+  .profile-link {
+    .profile-image {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  .sticky {
+    top: -75px;
+  }
+}

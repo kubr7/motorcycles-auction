@@ -1,0 +1,76 @@
+// Edit User
+.edit-user-data {
+  @include flex-row-center;
+  height: auto;
+}
+
+.edit-user-form {
+  @include flex-col-center($direction: column);
+  padding: 0.5rem;
+  margin: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: $box-shadow;
+}
+
+.edit-form-data {
+  @include flex-col-center;
+  max-width: 100%;
+  position: relative;
+
+  p {
+    margin: 1rem;
+
+    label {
+      display: block;
+
+      font: {
+        size: 14px;
+        weight: bold;
+      }
+    }
+
+    input[type="text"] {
+      width: 100%;
+      text-indent: 5px;
+      outline: none;
+      border: 1px solid transparent;
+      border-bottom: 1px dashed black;
+      box-sizing: border-box;
+      transition: all 0.2s ease;
+      letter-spacing: 2px;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border: 1px solid transparent;
+      border-bottom: 1px solid black;
+      background-color: transparent;
+      transition: all 0.2s ease;
+    }
+
+    .helptext {
+      font-size: clamp(0.5rem, 2vw, 0.625rem);
+      text-align: end;
+      font-weight: 700;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .edit-user-form {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .edit-user-form {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .edit-user-form {
+    width: 100%;
+  }
+}

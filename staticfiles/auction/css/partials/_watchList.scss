@@ -1,0 +1,29 @@
+// _partials/_watchList.scss
+// WatchList
+.watchList {
+  .card {
+    width: 25rem;
+  }
+}
+
+.empty-watchlist {
+  width: 100%;
+  height: 600px;
+  background: rgb(224, 147, 47);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  p {
+    font-weight: 800;
+    font-size: clamp(1rem, 3vw, 2rem);
+  }
+
+  a {
+    color: $color1;
+    text-decoration: none;
+    font-weight: 900;
+    font-size: clamp(1rem, 3vw, 1.5rem);
+  }
+}

@@ -1,0 +1,70 @@
+// _partials/_login.scss
+
+// Register Page
+.logout-container {
+  @include flex-col-center;
+  @include login-register;
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+.bg-img {
+  background-image: url("/static/auction/images/img5.jpg");
+}
+
+.register-form-container {
+  @include form-container;
+  transform: translateX(50%);
+  top: 98.2px;
+}
+
+.reg-heading {
+  @include log-reg-heading;
+}
+
+.container {
+  @include form;
+
+  p {
+    @include form-p;
+  }
+
+  .helptext {
+    font-size: clamp(0.5rem, 2vw, 0.75rem);
+  }
+
+  ul {
+    padding: 0;
+    list-style-position: inside;
+    list-style-type: disclosure-closed;
+    > li {
+      font-size: clamp(0.5rem, 2vw, 0.75rem);
+      color: #000814;
+    }
+  }
+}
+
+.redirect {
+  @include redirect;
+}
+
+@media (max-width: 768px) {
+  .register-form-container {
+    width: 50%;
+    top: 72.8px;
+    padding: 0.5rem;
+    transform: translateX(50%);
+  }
+}
+
+@media (max-width: 576px) {
+  .register-form-container {
+    width: 100%;
+    top: 137.6px;
+    padding: 0.5rem;
+    transform: translateX(0);
+  }
+}
